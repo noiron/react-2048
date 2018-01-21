@@ -1,7 +1,9 @@
 export default class Matrix {
-    constructor({ matrix, isMoved }) {
+    constructor({ matrix, isMoved, score }) {
         this.matrix = matrix;
         this.isMoved = isMoved || false;
+        this.score = score || 0;
+
         this.addRandomNumToMatrix();
     }
 
@@ -107,6 +109,7 @@ export default class Matrix {
                 if (value > 0 && value === matrix[i][j + 1]) {
                     matrix[i][j] *= 2;
                     matrix[i][j + 1] = 0;
+                    this.score += matrix[i][j];
                 } else if (value === 0 && matrix[i][j + 1] > 0) {
                     matrix[i][j] = matrix[i][j + 1];
                     matrix[i][j + 1] = 0;
@@ -125,6 +128,7 @@ export default class Matrix {
                 if (value > 0 && value === matrix[i][j - 1]) {
                     matrix[i][j] *= 2;
                     matrix[i][j - 1] = 0;
+                    this.score += matrix[i][j];
                 } else if (value === 0 && matrix[i][j - 1] > 0) {
                     matrix[i][j] = matrix[i][j - 1];
                     matrix[i][j - 1] = 0;
@@ -135,7 +139,7 @@ export default class Matrix {
 
     move = callback => {
         const prevMatrix = JSON.parse(JSON.stringify(this.matrix));
-        
+
         callback();
         
         if (this.isBoardMoved(prevMatrix, this.matrix)) {

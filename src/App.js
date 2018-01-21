@@ -24,7 +24,6 @@ class App extends Component {
     }
 
     handleKeyDown = e => {
-        console.log(e.key);
         const { matrix } = this.state;
 
         switch (e.key) {
@@ -66,6 +65,7 @@ class App extends Component {
     render() {
         return (
             <div className="App">
+                <div className="score">Score: {this.state.matrix.score}</div>
                 <Board matrix={this.state.matrix.matrix} />
             </div>
         );
