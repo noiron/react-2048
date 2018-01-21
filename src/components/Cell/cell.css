@@ -1,0 +1,68 @@
+td.cell {
+    width: 100px;
+    height: 100px;
+    border: 3px solid #aaa;
+    box-sizing: border-box;
+    border-radius: 2px;
+}
+
+td.cell div {
+    width: 90px;
+    height: 90px;
+    font-size: 32px;
+    line-height: 90px;
+}
+
+
+/* Colors from http://materialuicolors.co/  Orange */
+.color-2 {
+    background-color: #FFF3E0;
+}
+
+.color-4 {
+    background-color: #FFE0B2;
+}
+
+.color-8 {
+    background-color: #FFCC80;
+}
+
+.color-16 {
+    background-color: #FFB74D;
+}
+
+.color-32 {
+    background-color: #FFA726;
+}
+
+.color-64 {
+    background-color: #FF9800;
+}
+
+.color-128 {
+    background-color: #FB8C00;
+}
+
+.color-256 {
+    background-color: #F57C00;
+}
+
+.color-512 {
+    background-color: #EF6C00;
+}
+
+.color-1024 {
+    background-color: #E65100;
+}
+
+.color-2048 {
+    background-color: #FF9100;
+}
+
+.color-4096 {
+    background-color: #FF6D00;
+}
+
+.color-8192 {
+    background-color: #FFD180;
+}
