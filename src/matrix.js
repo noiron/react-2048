@@ -1,6 +1,7 @@
 export default class Matrix {
-    constructor({ matrix }) {
+    constructor({ matrix, isMoved }) {
         this.matrix = matrix;
+        this.isMoved = isMoved || false;
         this.addRandomNumToMatrix();
     }
 
@@ -26,7 +27,9 @@ export default class Matrix {
         return arr[Math.floor(Math.random() * arr.length)];
     };
 
-    isBoardMoved = (preMatrix, newMatrix) => {};
+    isBoardMoved = (preMatrix, newMatrix) => {
+        return JSON.stringify(preMatrix) !== JSON.stringify(newMatrix);
+    };
 
     checkGameOver = matrix => {};
 
@@ -96,19 +99,55 @@ export default class Matrix {
         this.matrix = newMatrix;
     };
 
-    combineNumToLeft = () => {};
+    combineNumToLeft = () => {
+        const { matrix } = this;
 
-    combineNumToRight = () => {};
+        matrix.forEach((row, i) => {
+            row.forEach((value, j) => {
+                if (value > 0 && value === matrix[i][j + 1]) {
+                    matrix[i][j] *= 2;
+                    matrix[i][j + 1] = 0;
+                } else if (value === 0 && matrix[i][j + 1] > 0) {
+                    matrix[i][j] = matrix[i][j + 1];
+                    matrix[i][j + 1] = 0;
+                }
+            })
+        })
+    };
+
+    combineNumToRight = () => {
+        const { matrix } = this;
+        const len = matrix.length;
+
+        matrix.forEach((row, i) => {
+            for (let j = len - 1; j >= 0; j--) {
+                const value = matrix[i][j];
+                if (value > 0 && value === matrix[i][j - 1]) {
+                    matrix[i][j] *= 2;
+                    matrix[i][j - 1] = 0;
+                } else if (value === 0 && matrix[i][j - 1] > 0) {
+                    matrix[i][j] = matrix[i][j - 1];
+                    matrix[i][j - 1] = 0;
+                }
+            }
+        })
+    };
 
     move = callback => {
+        const prevMatrix = JSON.parse(JSON.stringify(this.matrix));
+        
         callback();
-        this.addRandomNumToMatrix();
+        
+        if (this.isBoardMoved(prevMatrix, this.matrix)) {
+            this.addRandomNumToMatrix();
+        }
     };
 
     moveUp = () => {
         this.move(() => {
             this.rotateRight();
             this.shiftRight();
+            this.combineNumToRight();           
             this.rotateLeft();
         });
     };
@@ -117,6 +156,7 @@ export default class Matrix {
         this.move(() => {
             this.rotateLeft();
             this.shiftRight();
+            this.combineNumToRight();
             this.rotateRight();
         });
     };
@@ -124,12 +164,14 @@ export default class Matrix {
     moveLeft = () => {
         this.move(() => {
             this.shiftLeft();
+            this.combineNumToLeft();
         });
     };
 
     moveRight = () => {
         this.move(() => {
             this.shiftRight();
+            this.combineNumToRight();
         });
     };
 }
