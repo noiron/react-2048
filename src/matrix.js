@@ -5,6 +5,7 @@ export default class Matrix {
         this.score = score || 0;
 
         this.addRandomNumToMatrix();
+        this.addRandomNumToMatrix();
     }
 
     /**

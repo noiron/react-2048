@@ -4,9 +4,18 @@ body {
     font-family: sans-serif;
 }
 
+.App {
+    min-width: 400px;
+    padding: 20px 50px;
+}
+
 .score {
     text-align: left;
-    margin-left: 50px;
     margin-top: 50px;
     font-size: 40px;
+}
+
+.speaker-btn {
+    text-align: left;
+    margin-top: 20px;
 }
