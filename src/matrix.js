@@ -1,6 +1,6 @@
 export default class Matrix {
-    constructor({ matrix, isMoved, score }) {
-        this.matrix = matrix;
+    constructor({ mat, isMoved, score }) {
+        this.mat = mat;
         this.isMoved = isMoved || false;
         this.score = score || 0;
 
@@ -12,10 +12,10 @@ export default class Matrix {
      * 获取空白格子的坐标
      */
     getEmptyCoordinates = () => {
-        const { matrix } = this;
+        const { mat } = this;
         const coordinates = [];
 
-        matrix.forEach((row, i) => {
+        mat.forEach((row, i) => {
             row.forEach((value, j) => {
                 if (value === 0) {
                     coordinates.push([i, j]);
@@ -43,42 +43,42 @@ export default class Matrix {
         }
 
         const [row, col] = this.getRandom(emptyCoords);
-        const newMatrix = this.matrix;
+        const newMatrix = this.mat;
         newMatrix[row][col] = this.getRandom([2, 4]);
     };
 
     rotateRight = () => {
-        const { matrix } = this;
+        const { mat } = this;
         const newMatrix = [];
-        const len = matrix.length;
+        const len = mat.length;
 
         for (let i = 0; i < len; i++) {
             newMatrix[i] = [];
             for (let j = 0; j < len; j++) {
                 // 矩阵第 x 行经向右旋转，变成新矩阵的 len - 1 - x 列
-                newMatrix[i][j] = matrix[len - 1 - j][i];
+                newMatrix[i][j] = mat[len - 1 - j][i];
             }
         }
-        this.matrix = newMatrix;
+        this.mat = newMatrix;
     };
 
     rotateLeft = () => {
-        const { matrix } = this;
+        const { mat } = this;
         const newMatrix = [];
-        const len = matrix.length;
+        const len = mat.length;
 
         for (let i = 0; i < len; i++) {
             newMatrix[i] = [];
             for (let j = 0; j < len; j++) {
-                newMatrix[i][j] = matrix[j][len - 1 - i];
+                newMatrix[i][j] = mat[j][len - 1 - i];
             }
         }
-        this.matrix = newMatrix;
+        this.mat = newMatrix;
     };
 
     shiftRight = () => {
-        const { matrix } = this;
-        const newMatrix = matrix.map(row => {
+        const { mat } = this;
+        const newMatrix = mat.map(row => {
             const newRow = [];
             row.forEach(v => {
                 if (v === 0) newRow.unshift(0);
@@ -86,12 +86,12 @@ export default class Matrix {
             });
             return newRow;
         });
-        this.matrix = newMatrix;
+        this.mat = newMatrix;
     };
 
     shiftLeft = () => {
-        const { matrix } = this;
-        const newMatrix = matrix.map(row => {
+        const { mat } = this;
+        const newMatrix = mat.map(row => {
             const newRow = [];
             row.reverse().forEach(v => {
                 if (v === 0) newRow.push(0);
@@ -99,51 +99,51 @@ export default class Matrix {
             });
             return newRow;
         });
-        this.matrix = newMatrix;
+        this.mat = newMatrix;
     };
 
     combineNumToLeft = () => {
-        const { matrix } = this;
+        const { mat } = this;
 
-        matrix.forEach((row, i) => {
+        mat.forEach((row, i) => {
             row.forEach((value, j) => {
-                if (value > 0 && value === matrix[i][j + 1]) {
-                    matrix[i][j] *= 2;
-                    matrix[i][j + 1] = 0;
-                    this.score += matrix[i][j];
-                } else if (value === 0 && matrix[i][j + 1] > 0) {
-                    matrix[i][j] = matrix[i][j + 1];
-                    matrix[i][j + 1] = 0;
+                if (value > 0 && value === mat[i][j + 1]) {
+                    mat[i][j] *= 2;
+                    mat[i][j + 1] = 0;
+                    this.score += mat[i][j];
+                } else if (value === 0 && mat[i][j + 1] > 0) {
+                    mat[i][j] = mat[i][j + 1];
+                    mat[i][j + 1] = 0;
                 }
             })
         })
     };
 
     combineNumToRight = () => {
-        const { matrix } = this;
-        const len = matrix.length;
+        const { mat } = this;
+        const len = mat.length;
 
-        matrix.forEach((row, i) => {
+        mat.forEach((row, i) => {
             for (let j = len - 1; j >= 0; j--) {
-                const value = matrix[i][j];
-                if (value > 0 && value === matrix[i][j - 1]) {
-                    matrix[i][j] *= 2;
-                    matrix[i][j - 1] = 0;
-                    this.score += matrix[i][j];
-                } else if (value === 0 && matrix[i][j - 1] > 0) {
-                    matrix[i][j] = matrix[i][j - 1];
-                    matrix[i][j - 1] = 0;
+                const value = mat[i][j];
+                if (value > 0 && value === mat[i][j - 1]) {
+                    mat[i][j] *= 2;
+                    mat[i][j - 1] = 0;
+                    this.score += mat[i][j];
+                } else if (value === 0 && mat[i][j - 1] > 0) {
+                    mat[i][j] = mat[i][j - 1];
+                    mat[i][j - 1] = 0;
                 }
             }
         })
     };
 
     move = callback => {
-        const prevMatrix = JSON.parse(JSON.stringify(this.matrix));
+        const prevMatrix = JSON.parse(JSON.stringify(this.mat));
 
         callback();
         
-        if (this.isBoardMoved(prevMatrix, this.matrix)) {
+        if (this.isBoardMoved(prevMatrix, this.mat)) {
             this.addRandomNumToMatrix();
         }
     };

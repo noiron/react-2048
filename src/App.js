@@ -8,7 +8,7 @@ import './App.css';
 const moveAudio = new Audio(MoveAudio);
 
 const matrix = new Matrix({
-    matrix: [
+    mat: [
         [0, 0, 0, 0],
         [0, 0, 0, 0],
         [0, 0, 0, 0],
@@ -28,48 +28,54 @@ class App extends Component {
         document.addEventListener('keydown', this.handleKeyDown);
     }
 
+    componentDidMount() {
+        // 如果 localStorage 中保存有数据，则读取以用于初始化
+        if (localStorage.getItem('2048_game_state')) {
+            const localStorageState = JSON.parse(localStorage.getItem('2048_game_state'));
+            if (localStorageState.mat) {
+                const { mat, score, isMoved } = localStorageState;
+                const matrix = new Matrix({ mat, score, isMoved });
+                this.setState({ matrix });
+        }
+    }
+}
+
     handleKeyDown = e => {
-        const { matrix, speakerOn } = this.state;
+        const { matrix } = this.state;
 
         switch (e.key) {
             case 'ArrowLeft':
                 matrix.moveLeft();
-                this.setState({ matrix });
-                speakerOn && moveAudio.play();
+                this._operationAfterMove(matrix);
                 break;
 
             case 'ArrowRight':
                 matrix.moveRight();
-                this.setState({ matrix });
-                speakerOn && moveAudio.play();
+                this._operationAfterMove(matrix);
                 break;
 
             case 'ArrowUp':
                 matrix.moveUp();
-                this.setState({ matrix });
-                speakerOn && moveAudio.play();
+                this._operationAfterMove(matrix);
                 break;
 
             case 'ArrowDown':
                 matrix.moveDown();
-                this.setState({ matrix });
-                speakerOn && moveAudio.play();
+                this._operationAfterMove(matrix);
                 break;
-
-            // case 'r':
-            //     matrix.rotateRight();
-            //     this.setState({ matrix });
-            //     break;
-
-            // case 'l':
-            //     matrix.rotateLeft();
-            //     this.setState({ matrix });
-            //     break;
 
             default:
                 break;
         }
     };
+
+    _operationAfterMove(matrix) {
+        const { speakerOn } = this.state;
+        this.setState({ matrix });
+        speakerOn && moveAudio.play();
+        // 每次操作后将数据保存到 localStorage 中去
+        setLocalStorageState(matrix);
+    }
 
     toggleSpeaker = () => {
         this.setState({
@@ -84,10 +90,22 @@ class App extends Component {
             <div className="App">
                 <div className="score">Score: {matrix.score}</div>
                 <Speaker onClick={this.toggleSpeaker} speakerOn={speakerOn} />
-                <Board matrix={matrix.matrix} />
+                <Board matrix={matrix.mat} />
             </div>
         );
     }
 }
 
 export default App;
+
+function setLocalStorageState(matrix) {
+    const { mat, isMoved, score } = matrix;
+
+    const state = {
+        mat,
+        isMoved,
+        score
+    };
+    const stateStr = JSON.stringify(state);
+    localStorage.setItem('2048_game_state', stateStr);
+}
