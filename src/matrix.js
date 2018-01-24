@@ -1,6 +1,6 @@
 export default class Matrix {
-    constructor({ mat, isMoved, score }) {
-        this.mat = mat;
+    constructor({ grids, isMoved, score }) {
+        this.grids = grids;
         this.isMoved = isMoved || false;
         this.score = score || 0;
 
@@ -12,10 +12,10 @@ export default class Matrix {
      * 获取空白格子的坐标
      */
     getEmptyCoordinates = () => {
-        const { mat } = this;
+        const { grids } = this;
         const coordinates = [];
 
-        mat.forEach((row, i) => {
+        grids.forEach((row, i) => {
             row.forEach((value, j) => {
                 if (value === 0) {
                     coordinates.push([i, j]);
@@ -30,8 +30,8 @@ export default class Matrix {
         return arr[Math.floor(Math.random() * arr.length)];
     };
 
-    isBoardMoved = (preMatrix, newMatrix) => {
-        return JSON.stringify(preMatrix) !== JSON.stringify(newMatrix);
+    isBoardMoved = (preGrids, newGrids) => {
+        return JSON.stringify(preGrids) !== JSON.stringify(newGrids);
     };
 
     checkGameOver = matrix => {};
@@ -43,42 +43,42 @@ export default class Matrix {
         }
 
         const [row, col] = this.getRandom(emptyCoords);
-        const newMatrix = this.mat;
-        newMatrix[row][col] = this.getRandom([2, 4]);
+        const newGrids = this.grids;
+        newGrids[row][col] = this.getRandom([2, 4]);
     };
 
     rotateRight = () => {
-        const { mat } = this;
-        const newMatrix = [];
-        const len = mat.length;
+        const { grids } = this;
+        const newGrids = [];
+        const len = grids.length;
 
         for (let i = 0; i < len; i++) {
-            newMatrix[i] = [];
+            newGrids[i] = [];
             for (let j = 0; j < len; j++) {
                 // 矩阵第 x 行经向右旋转，变成新矩阵的 len - 1 - x 列
-                newMatrix[i][j] = mat[len - 1 - j][i];
+                newGrids[i][j] = grids[len - 1 - j][i];
             }
         }
-        this.mat = newMatrix;
+        this.grids = newGrids;
     };
 
     rotateLeft = () => {
-        const { mat } = this;
-        const newMatrix = [];
-        const len = mat.length;
+        const { grids } = this;
+        const newGrids = [];
+        const len = grids.length;
 
         for (let i = 0; i < len; i++) {
-            newMatrix[i] = [];
+            newGrids[i] = [];
             for (let j = 0; j < len; j++) {
-                newMatrix[i][j] = mat[j][len - 1 - i];
+                newGrids[i][j] = grids[j][len - 1 - i];
             }
         }
-        this.mat = newMatrix;
+        this.grids = newGrids;
     };
 
     shiftRight = () => {
-        const { mat } = this;
-        const newMatrix = mat.map(row => {
+        const { grids } = this;
+        const newGrids = grids.map(row => {
             const newRow = [];
             row.forEach(v => {
                 if (v === 0) newRow.unshift(0);
@@ -86,12 +86,12 @@ export default class Matrix {
             });
             return newRow;
         });
-        this.mat = newMatrix;
+        this.grids = newGrids;
     };
 
     shiftLeft = () => {
-        const { mat } = this;
-        const newMatrix = mat.map(row => {
+        const { grids } = this;
+        const newGrids = grids.map(row => {
             const newRow = [];
             row.reverse().forEach(v => {
                 if (v === 0) newRow.push(0);
@@ -99,51 +99,51 @@ export default class Matrix {
             });
             return newRow;
         });
-        this.mat = newMatrix;
+        this.grids = newGrids;
     };
 
     combineNumToLeft = () => {
-        const { mat } = this;
+        const { grids } = this;
 
-        mat.forEach((row, i) => {
+        grids.forEach((row, i) => {
             row.forEach((value, j) => {
-                if (value > 0 && value === mat[i][j + 1]) {
-                    mat[i][j] *= 2;
-                    mat[i][j + 1] = 0;
-                    this.score += mat[i][j];
-                } else if (value === 0 && mat[i][j + 1] > 0) {
-                    mat[i][j] = mat[i][j + 1];
-                    mat[i][j + 1] = 0;
+                if (value > 0 && value === grids[i][j + 1]) {
+                    grids[i][j] *= 2;
+                    grids[i][j + 1] = 0;
+                    this.score += grids[i][j];
+                } else if (value === 0 && grids[i][j + 1] > 0) {
+                    grids[i][j] = grids[i][j + 1];
+                    grids[i][j + 1] = 0;
                 }
             })
         })
     };
 
     combineNumToRight = () => {
-        const { mat } = this;
-        const len = mat.length;
+        const { grids } = this;
+        const len = grids.length;
 
-        mat.forEach((row, i) => {
+        grids.forEach((row, i) => {
             for (let j = len - 1; j >= 0; j--) {
-                const value = mat[i][j];
-                if (value > 0 && value === mat[i][j - 1]) {
-                    mat[i][j] *= 2;
-                    mat[i][j - 1] = 0;
-                    this.score += mat[i][j];
-                } else if (value === 0 && mat[i][j - 1] > 0) {
-                    mat[i][j] = mat[i][j - 1];
-                    mat[i][j - 1] = 0;
+                const value = grids[i][j];
+                if (value > 0 && value === grids[i][j - 1]) {
+                    grids[i][j] *= 2;
+                    grids[i][j - 1] = 0;
+                    this.score += grids[i][j];
+                } else if (value === 0 && grids[i][j - 1] > 0) {
+                    grids[i][j] = grids[i][j - 1];
+                    grids[i][j - 1] = 0;
                 }
             }
         })
     };
 
     move = callback => {
-        const prevMatrix = JSON.parse(JSON.stringify(this.mat));
+        const prevGrids = JSON.parse(JSON.stringify(this.grids));
 
         callback();
         
-        if (this.isBoardMoved(prevMatrix, this.mat)) {
+        if (this.isBoardMoved(prevGrids, this.grids)) {
             this.addRandomNumToMatrix();
         }
     };

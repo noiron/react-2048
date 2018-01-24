@@ -8,13 +8,12 @@ import './App.css';
 const moveAudio = new Audio(MoveAudio);
 
 const matrix = new Matrix({
-    mat: [
+    grids: [
         [0, 0, 0, 0],
         [0, 0, 0, 0],
         [0, 0, 0, 0],
         [0, 0, 0, 0]
     ]
-    // matrix: [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]]
 });
 
 class App extends Component {
@@ -32,9 +31,9 @@ class App extends Component {
         // 如果 localStorage 中保存有数据，则读取以用于初始化
         if (localStorage.getItem('2048_game_state')) {
             const localStorageState = JSON.parse(localStorage.getItem('2048_game_state'));
-            if (localStorageState.mat) {
-                const { mat, score, isMoved } = localStorageState;
-                const matrix = new Matrix({ mat, score, isMoved });
+            if (localStorageState.grids) {
+                const { grids, score, isMoved } = localStorageState;
+                const matrix = new Matrix({ grids, score, isMoved });
                 this.setState({ matrix });
         }
     }
@@ -90,7 +89,7 @@ class App extends Component {
             <div className="App">
                 <div className="score">Score: {matrix.score}</div>
                 <Speaker onClick={this.toggleSpeaker} speakerOn={speakerOn} />
-                <Board matrix={matrix.mat} />
+                <Board matrix={matrix.grids} />
             </div>
         );
     }
@@ -99,10 +98,10 @@ class App extends Component {
 export default App;
 
 function setLocalStorageState(matrix) {
-    const { mat, isMoved, score } = matrix;
+    const { grids, isMoved, score } = matrix;
 
     const state = {
-        mat,
+        grids,
         isMoved,
         score
     };
