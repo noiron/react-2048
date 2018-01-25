@@ -84,9 +84,9 @@ class App extends Component {
     };
 
     resetGame = () => {
-        const { matrix } = this.state;
-        matrix._reset();
-        this.setState({ matrix });
+        this.setState(prevState => ({
+            matrix: prevState.matrix._reset()
+        }));
     }
 
     render() {

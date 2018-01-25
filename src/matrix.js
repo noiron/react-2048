@@ -205,5 +205,6 @@ export default class Matrix {
         this.isMoved = isMoved;
         this.score = score;
         this.addInitNums();
+        return this;
     }
 }
