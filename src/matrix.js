@@ -1,11 +1,24 @@
+const initState = {
+    grids: [
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0]
+    ],
+    isMoved: false,
+    score: 0
+};
+
 export default class Matrix {
     constructor({ grids, isMoved, score }) {
-        this.grids = grids;
+        this.grids = JSON.parse(JSON.stringify(grids));
         this.isMoved = isMoved || false;
         this.score = score || 0;
 
-        this.addRandomNumToMatrix();
-        this.addRandomNumToMatrix();
+        // 游戏处于空白状态时，随机加入初始数字
+        if (JSON.stringify(grids) === JSON.stringify(initState.grids)) {
+            this.addInitNums();
+        }
     }
 
     /**
@@ -46,6 +59,12 @@ export default class Matrix {
         const newGrids = this.grids;
         newGrids[row][col] = this.getRandom([2, 4]);
     };
+
+    addInitNums = (quanity = 2) => {
+        [1, 2].forEach(a => {
+            this.addRandomNumToMatrix();
+        })
+    }
 
     rotateRight = () => {
         const { grids } = this;
@@ -93,7 +112,7 @@ export default class Matrix {
         const { grids } = this;
         const newGrids = grids.map(row => {
             const newRow = [];
-            row.reverse().forEach(v => {
+            [...row].reverse().forEach(v => {
                 if (v === 0) newRow.push(0);
                 else newRow.unshift(v);
             });
@@ -179,4 +198,12 @@ export default class Matrix {
             this.combineNumToRight();
         });
     };
+
+    _reset = () => {
+        const { grids, isMoved, score } = initState;
+        this.grids = JSON.parse(JSON.stringify(grids));
+        this.isMoved = isMoved;
+        this.score = score;
+        this.addInitNums();
+    }
 }

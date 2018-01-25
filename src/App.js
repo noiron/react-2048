@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Board from './components/Board';
 import Matrix from './matrix';
 import Speaker from './components/Speaker';
+import Reset from './components/Reset';
 import MoveAudio from './assets/audio/move.mp3';
 import './App.css';
 
@@ -82,6 +83,12 @@ class App extends Component {
         });
     };
 
+    resetGame = () => {
+        const { matrix } = this.state;
+        matrix._reset();
+        this.setState({ matrix });
+    }
+
     render() {
         const { matrix, speakerOn } = this.state;
 
@@ -89,6 +96,7 @@ class App extends Component {
             <div className="App">
                 <div className="score">Score: {matrix.score}</div>
                 <Speaker onClick={this.toggleSpeaker} speakerOn={speakerOn} />
+                <Reset onClick={this.resetGame} />
                 <Board matrix={matrix.grids} />
             </div>
         );
