@@ -15,7 +15,13 @@ body {
     font-size: 40px;
 }
 
-.speaker-btn {
+.buttons-row {
+    padding: 10px 0;
     text-align: left;
-    margin-top: 20px;
+}
+
+.buttons-row [class$='-btn'] {
+    display: inline-block;
+    margin-right: 10px;
+    cursor: pointer;
 }

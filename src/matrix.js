@@ -61,7 +61,7 @@ export default class Matrix {
     };
 
     addInitNums = (quanity = 2) => {
-        [1, 2].forEach(a => {
+        [...Array(2)].forEach(a => {
             this.addRandomNumToMatrix();
         })
     }

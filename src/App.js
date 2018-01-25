@@ -87,7 +87,7 @@ class App extends Component {
         this.setState(prevState => ({
             matrix: prevState.matrix._reset()
         }));
-    }
+    };
 
     render() {
         const { matrix, speakerOn } = this.state;
@@ -95,8 +95,10 @@ class App extends Component {
         return (
             <div className="App">
                 <div className="score">Score: {matrix.score}</div>
-                <Speaker onClick={this.toggleSpeaker} speakerOn={speakerOn} />
-                <Reset onClick={this.resetGame} />
+                <div className="buttons-row">
+                    <Speaker onClick={this.toggleSpeaker} speakerOn={speakerOn} />
+                    <Reset onClick={this.resetGame} />
+                </div>                
                 <Board matrix={matrix.grids} />
             </div>
         );
