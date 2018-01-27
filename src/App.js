@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Board from './components/Board';
-import Matrix from './matrix';
+import Game from './game';
 import Speaker from './components/Speaker';
 import Reset from './components/Reset';
 import MoveAudio from './assets/audio/move.mp3';
@@ -8,8 +8,8 @@ import './App.css';
 
 const moveAudio = new Audio(MoveAudio);
 
-const matrix = new Matrix({
-    grids: [
+const game = new Game({
+    matrix: [
         [0, 0, 0, 0],
         [0, 0, 0, 0],
         [0, 0, 0, 0],
@@ -21,7 +21,7 @@ class App extends Component {
     constructor() {
         super();
         this.state = {
-            matrix,
+            game,
             speakerOn: true,
         };
 
@@ -32,36 +32,36 @@ class App extends Component {
         // 如果 localStorage 中保存有数据，则读取以用于初始化
         if (localStorage.getItem('2048_game_state')) {
             const localStorageState = JSON.parse(localStorage.getItem('2048_game_state'));
-            if (localStorageState.grids) {
-                const { grids, score, isMoved } = localStorageState;
-                const matrix = new Matrix({ grids, score, isMoved });
-                this.setState({ matrix });
+            if (localStorageState.matrix) {
+                const { matrix, score, isMoved } = localStorageState;
+                const game = new Game({ matrix, score, isMoved });
+                this.setState({ game });
         }
     }
 }
 
     handleKeyDown = e => {
-        const { matrix } = this.state;
+        const { game } = this.state;
 
         switch (e.key) {
             case 'ArrowLeft':
-                matrix.moveLeft();
-                this._operationAfterMove(matrix);
+                game.moveLeft();
+                this._operationAfterMove(game);
                 break;
 
             case 'ArrowRight':
-                matrix.moveRight();
-                this._operationAfterMove(matrix);
+                game.moveRight();
+                this._operationAfterMove(game);
                 break;
 
             case 'ArrowUp':
-                matrix.moveUp();
-                this._operationAfterMove(matrix);
+                game.moveUp();
+                this._operationAfterMove(game);
                 break;
 
             case 'ArrowDown':
-                matrix.moveDown();
-                this._operationAfterMove(matrix);
+                game.moveDown();
+                this._operationAfterMove(game);
                 break;
 
             default:
@@ -69,12 +69,12 @@ class App extends Component {
         }
     };
 
-    _operationAfterMove(matrix) {
+    _operationAfterMove(game) {
         const { speakerOn } = this.state;
-        this.setState({ matrix });
+        this.setState({ game });
         speakerOn && moveAudio.play();
         // 每次操作后将数据保存到 localStorage 中去
-        setLocalStorageState(matrix);
+        setLocalStorageState(game);
     }
 
     toggleSpeaker = () => {
@@ -85,21 +85,21 @@ class App extends Component {
 
     resetGame = () => {
         this.setState(prevState => ({
-            matrix: prevState.matrix._reset()
+            game: prevState.game._reset()
         }));
     };
 
     render() {
-        const { matrix, speakerOn } = this.state;
+        const { game, speakerOn } = this.state;
 
         return (
             <div className="App">
-                <div className="score">Score: {matrix.score}</div>
+                <div className="score">Score: {game.score}</div>
                 <div className="buttons-row">
                     <Speaker onClick={this.toggleSpeaker} speakerOn={speakerOn} />
                     <Reset onClick={this.resetGame} />
                 </div>                
-                <Board matrix={matrix.grids} />
+                <Board matrix={game.matrix} />
             </div>
         );
     }
@@ -107,11 +107,11 @@ class App extends Component {
 
 export default App;
 
-function setLocalStorageState(matrix) {
-    const { grids, isMoved, score } = matrix;
+function setLocalStorageState(game) {
+    const { matrix, isMoved, score } = game;
 
     const state = {
-        grids,
+        matrix,
         isMoved,
         score
     };

@@ -1,5 +1,5 @@
 const initState = {
-    grids: [
+    matrix: [
         [0, 0, 0, 0],
         [0, 0, 0, 0],
         [0, 0, 0, 0],
@@ -9,14 +9,14 @@ const initState = {
     score: 0
 };
 
-export default class Matrix {
-    constructor({ grids, isMoved, score }) {
-        this.grids = JSON.parse(JSON.stringify(grids));
+export default class Game {
+    constructor({ matrix, isMoved, score }) {
+        this.matrix = JSON.parse(JSON.stringify(matrix));
         this.isMoved = isMoved || false;
         this.score = score || 0;
 
         // 游戏处于空白状态时，随机加入初始数字
-        if (JSON.stringify(grids) === JSON.stringify(initState.grids)) {
+        if (JSON.stringify(matrix) === JSON.stringify(initState.matrix)) {
             this.addInitNums();
         }
     }
@@ -25,10 +25,10 @@ export default class Matrix {
      * 获取空白格子的坐标
      */
     getEmptyCoordinates = () => {
-        const { grids } = this;
+        const { matrix } = this;
         const coordinates = [];
 
-        grids.forEach((row, i) => {
+        matrix.forEach((row, i) => {
             row.forEach((value, j) => {
                 if (value === 0) {
                     coordinates.push([i, j]);
@@ -43,8 +43,8 @@ export default class Matrix {
         return arr[Math.floor(Math.random() * arr.length)];
     };
 
-    isBoardMoved = (preGrids, newGrids) => {
-        return JSON.stringify(preGrids) !== JSON.stringify(newGrids);
+    isBoardMoved = (preMatrix, newMatrix) => {
+        return JSON.stringify(preMatrix) !== JSON.stringify(newMatrix);
     };
 
     checkGameOver = matrix => {};
@@ -56,8 +56,8 @@ export default class Matrix {
         }
 
         const [row, col] = this.getRandom(emptyCoords);
-        const newGrids = this.grids;
-        newGrids[row][col] = this.getRandom([2, 4]);
+        const newMatrix = this.matrix;
+        newMatrix[row][col] = this.getRandom([2, 4]);
     };
 
     addInitNums = (quanity = 2) => {
@@ -67,37 +67,37 @@ export default class Matrix {
     }
 
     rotateRight = () => {
-        const { grids } = this;
-        const newGrids = [];
-        const len = grids.length;
+        const { matrix } = this;
+        const newMatrix = [];
+        const len = matrix.length;
 
         for (let i = 0; i < len; i++) {
-            newGrids[i] = [];
+            newMatrix[i] = [];
             for (let j = 0; j < len; j++) {
                 // 矩阵第 x 行经向右旋转，变成新矩阵的 len - 1 - x 列
-                newGrids[i][j] = grids[len - 1 - j][i];
+                newMatrix[i][j] = matrix[len - 1 - j][i];
             }
         }
-        this.grids = newGrids;
+        this.matrix = newMatrix;
     };
 
     rotateLeft = () => {
-        const { grids } = this;
-        const newGrids = [];
-        const len = grids.length;
+        const { matrix } = this;
+        const newMatrix = [];
+        const len = matrix.length;
 
         for (let i = 0; i < len; i++) {
-            newGrids[i] = [];
+            newMatrix[i] = [];
             for (let j = 0; j < len; j++) {
-                newGrids[i][j] = grids[j][len - 1 - i];
+                newMatrix[i][j] = matrix[j][len - 1 - i];
             }
         }
-        this.grids = newGrids;
+        this.matrix = newMatrix;
     };
 
     shiftRight = () => {
-        const { grids } = this;
-        const newGrids = grids.map(row => {
+        const { matrix } = this;
+        const newMatrix = matrix.map(row => {
             const newRow = [];
             row.forEach(v => {
                 if (v === 0) newRow.unshift(0);
@@ -105,12 +105,12 @@ export default class Matrix {
             });
             return newRow;
         });
-        this.grids = newGrids;
+        this.matrix = newMatrix;
     };
 
     shiftLeft = () => {
-        const { grids } = this;
-        const newGrids = grids.map(row => {
+        const { matrix } = this;
+        const newMatrix = matrix.map(row => {
             const newRow = [];
             [...row].reverse().forEach(v => {
                 if (v === 0) newRow.push(0);
@@ -118,51 +118,51 @@ export default class Matrix {
             });
             return newRow;
         });
-        this.grids = newGrids;
+        this.matrix = newMatrix;
     };
 
     combineNumToLeft = () => {
-        const { grids } = this;
+        const { matrix } = this;
 
-        grids.forEach((row, i) => {
+        matrix.forEach((row, i) => {
             row.forEach((value, j) => {
-                if (value > 0 && value === grids[i][j + 1]) {
-                    grids[i][j] *= 2;
-                    grids[i][j + 1] = 0;
-                    this.score += grids[i][j];
-                } else if (value === 0 && grids[i][j + 1] > 0) {
-                    grids[i][j] = grids[i][j + 1];
-                    grids[i][j + 1] = 0;
+                if (value > 0 && value === matrix[i][j + 1]) {
+                    matrix[i][j] *= 2;
+                    matrix[i][j + 1] = 0;
+                    this.score += matrix[i][j];
+                } else if (value === 0 && matrix[i][j + 1] > 0) {
+                    matrix[i][j] = matrix[i][j + 1];
+                    matrix[i][j + 1] = 0;
                 }
             })
         })
     };
 
     combineNumToRight = () => {
-        const { grids } = this;
-        const len = grids.length;
+        const { matrix } = this;
+        const len = matrix.length;
 
-        grids.forEach((row, i) => {
+        matrix.forEach((row, i) => {
             for (let j = len - 1; j >= 0; j--) {
-                const value = grids[i][j];
-                if (value > 0 && value === grids[i][j - 1]) {
-                    grids[i][j] *= 2;
-                    grids[i][j - 1] = 0;
-                    this.score += grids[i][j];
-                } else if (value === 0 && grids[i][j - 1] > 0) {
-                    grids[i][j] = grids[i][j - 1];
-                    grids[i][j - 1] = 0;
+                const value = matrix[i][j];
+                if (value > 0 && value === matrix[i][j - 1]) {
+                    matrix[i][j] *= 2;
+                    matrix[i][j - 1] = 0;
+                    this.score += matrix[i][j];
+                } else if (value === 0 && matrix[i][j - 1] > 0) {
+                    matrix[i][j] = matrix[i][j - 1];
+                    matrix[i][j - 1] = 0;
                 }
             }
         })
     };
 
     move = callback => {
-        const prevGrids = JSON.parse(JSON.stringify(this.grids));
+        const prevMatrix = JSON.parse(JSON.stringify(this.matrix));
 
         callback();
         
-        if (this.isBoardMoved(prevGrids, this.grids)) {
+        if (this.isBoardMoved(prevMatrix, this.matrix)) {
             this.addRandomNumToMatrix();
         }
     };
@@ -200,8 +200,8 @@ export default class Matrix {
     };
 
     _reset = () => {
-        const { grids, isMoved, score } = initState;
-        this.grids = JSON.parse(JSON.stringify(grids));
+        const { matrix, isMoved, score } = initState;
+        this.matrix = JSON.parse(JSON.stringify(matrix));
         this.isMoved = isMoved;
         this.score = score;
         this.addInitNums();
