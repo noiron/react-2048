@@ -1,7 +1,9 @@
-table {
+.boardTable {
     margin: 10px 0;
 }
 
-tr {
+.boardRow {
     height: 100px;
+    display: flex;
+    margin-bottom: 4px;
 }

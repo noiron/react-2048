@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './cell.css';
+import styles from './cell.css';
 
 
 export default class Cell extends React.Component {
@@ -15,9 +15,9 @@ export default class Cell extends React.Component {
         // const style = `rgba(${gray}, ${gray}, ${gray}, 0.6)`;
 
         return (
-            <td className={`color-${value} cell` }>
-                <div>{value || null}</div>
-            </td>
+            <div className={[styles.cell, styles[`color-${value}`]].join(' ')}>
+                <div className={styles.inner}>{value || null}</div>
+            </div>
         )
     }
 }

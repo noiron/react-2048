@@ -15,12 +15,12 @@ body {
     font-size: 40px;
 }
 
-.buttons-row {
+.buttonsRow {
     padding: 10px 0;
     text-align: left;
 }
 
-.buttons-row [class$='-btn'] {
+.buttonsRow [class$='-btn'] {
     display: inline-block;
     margin-right: 10px;
     cursor: pointer;

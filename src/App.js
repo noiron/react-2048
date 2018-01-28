@@ -4,7 +4,7 @@ import Game from './game';
 import Speaker from './components/Speaker';
 import Reset from './components/Reset';
 import MoveAudio from './assets/audio/move.mp3';
-import './App.css';
+import styles from './index.css';
 
 const moveAudio = new Audio(MoveAudio);
 
@@ -93,9 +93,9 @@ class App extends Component {
         const { game, speakerOn } = this.state;
 
         return (
-            <div className="App">
-                <div className="score">Score: {game.score}</div>
-                <div className="buttons-row">
+            <div className={styles.App}>
+                <div className={styles.score}>Score: {game.score}</div>
+                <div className={styles.buttonsRow}>
                     <Speaker onClick={this.toggleSpeaker} speakerOn={speakerOn} />
                     <Reset onClick={this.resetGame} />
                 </div>                

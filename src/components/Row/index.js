@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Cell from '../Cell';
+import styles from '../Board/board.css';
 
 export default class Row extends React.Component {
     static propTypes = {
@@ -11,9 +12,9 @@ export default class Row extends React.Component {
         const { row } = this.props;
 
         return (
-            <tr>
+            <div className={styles.boardRow}>
                 { row.map((num, index) => <Cell value={num} key={index} />)}
-            </tr>
+            </div>
         )
     }
 }

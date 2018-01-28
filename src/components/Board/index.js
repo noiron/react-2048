@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Row from '../Row';
-import './board.css';
+import styles from './board.css';
 
 export default class Board extends React.Component {
     static propTypes = {
@@ -12,11 +12,9 @@ export default class Board extends React.Component {
         const { matrix } = this.props;
 
         return (
-            <table>
-                <tbody>
-                    {matrix.map((row, index) => <Row row={row} key={index} />)}
-                </tbody>
-            </table>
+            <div className={styles.boardTable}>
+                {matrix.map((row, index) => <Row row={row} key={index} />)}
+            </div>
         );
     }
 }
