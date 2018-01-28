@@ -1,18 +1,16 @@
-const initState = {
+export const initState = {
     matrix: [
         [0, 0, 0, 0],
         [0, 0, 0, 0],
         [0, 0, 0, 0],
         [0, 0, 0, 0]
     ],
-    isMoved: false,
     score: 0
 };
 
 export default class Game {
-    constructor({ matrix, isMoved, score, highScore }) {
+    constructor({ matrix, score, highScore }) {
         this.matrix = JSON.parse(JSON.stringify(matrix));
-        this.isMoved = isMoved || false;
         this.score = score || 0;
         this.highScore = highScore || 0;
 
@@ -83,8 +81,11 @@ export default class Game {
         }
 
         const [row, col] = this.getRandom(emptyCoords);
-        const newMatrix = this.matrix;
+        const newMatrix = copyMatrix(this.matrix);
         newMatrix[row][col] = this.getRandom([2, 4]);
+
+        this.matrix = newMatrix;
+        return newMatrix;
     };
 
     addInitNums = (quanity = 2) => {
@@ -235,9 +236,8 @@ export default class Game {
     };
 
     _reset = () => {
-        const { matrix, isMoved, score } = initState;
+        const { matrix, score } = initState;
         this.matrix = JSON.parse(JSON.stringify(matrix));
-        this.isMoved = isMoved;
         this.score = score;
         this.addInitNums();
         return this;
