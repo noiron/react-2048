@@ -10,10 +10,11 @@ const initState = {
 };
 
 export default class Game {
-    constructor({ matrix, isMoved, score }) {
+    constructor({ matrix, isMoved, score, highScore }) {
         this.matrix = JSON.parse(JSON.stringify(matrix));
         this.isMoved = isMoved || false;
         this.score = score || 0;
+        this.highScore = highScore || 0;
 
         // 游戏处于空白状态时，随机加入初始数字
         if (JSON.stringify(matrix) === JSON.stringify(initState.matrix)) {
@@ -130,6 +131,7 @@ export default class Game {
                     matrix[i][j] *= 2;
                     matrix[i][j + 1] = 0;
                     this.score += matrix[i][j];
+                    if (this.score > this.highScore) this.highScore = this.score;
                 } else if (value === 0 && matrix[i][j + 1] > 0) {
                     matrix[i][j] = matrix[i][j + 1];
                     matrix[i][j + 1] = 0;
@@ -149,6 +151,7 @@ export default class Game {
                     matrix[i][j] *= 2;
                     matrix[i][j - 1] = 0;
                     this.score += matrix[i][j];
+                    if (this.score > this.highScore) this.highScore = this.score;
                 } else if (value === 0 && matrix[i][j - 1] > 0) {
                     matrix[i][j] = matrix[i][j - 1];
                     matrix[i][j - 1] = 0;

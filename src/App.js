@@ -33,8 +33,8 @@ class App extends Component {
         if (localStorage.getItem('2048_game_state')) {
             const localStorageState = JSON.parse(localStorage.getItem('2048_game_state'));
             if (localStorageState.matrix) {
-                const { matrix, score, isMoved } = localStorageState;
-                const game = new Game({ matrix, score, isMoved });
+                const { matrix, score, isMoved, highScore } = localStorageState;
+                const game = new Game({ matrix, score, isMoved, highScore });
                 this.setState({ game });
         }
     }
@@ -94,7 +94,11 @@ class App extends Component {
 
         return (
             <div className={styles.App}>
-                <div className={styles.score}>Score: {game.score}</div>
+                <section className={styles.scoresRow}>
+                    <div className={styles.score}>Score: {game.score}</div>
+                    <div className={styles.score}>HighScore: {game.highScore}</div>
+                </section>
+
                 <div className={styles.buttonsRow}>
                     <Speaker onClick={this.toggleSpeaker} speakerOn={speakerOn} />
                     <Reset onClick={this.resetGame} />
@@ -108,12 +112,13 @@ class App extends Component {
 export default App;
 
 function setLocalStorageState(game) {
-    const { matrix, isMoved, score } = game;
+    const { matrix, isMoved, score, highScore } = game;
 
     const state = {
         matrix,
         isMoved,
-        score
+        score,
+        highScore,
     };
     const stateStr = JSON.stringify(state);
     localStorage.setItem('2048_game_state', stateStr);

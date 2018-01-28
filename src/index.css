@@ -9,10 +9,17 @@ body {
     padding: 20px 50px;
 }
 
+.scoresRow {
+    width: 420px;
+    display: flex;
+    justify-content: space-between;
+}
+
 .score {
     text-align: left;
     margin-top: 50px;
-    font-size: 40px;
+    font-size: 28px;
+    display: inline-block;
 }
 
 .buttonsRow {
