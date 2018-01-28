@@ -48,7 +48,33 @@ export default class Game {
         return JSON.stringify(preMatrix) !== JSON.stringify(newMatrix);
     };
 
-    checkGameOver = matrix => {};
+    /**
+     * 检查任一数字周围是否有相同的数字
+     * 还需额外检查是否还有空格，以判断游戏是否结束
+     */
+    checkGameOver = () => {
+        const { matrix } = this;
+        let len = matrix.length;
+
+        function getNeighbors(i, j) {
+            const neighbors = [];
+            // if (i - 1 >= 0) neighbors.push(matrix[i - 1][j]);  // 左侧
+            // if (j - 1 >= 0) neighbors.push(matrix[i][j - 1]);  // 上侧
+            if (i + 1 < len) neighbors.push(matrix[i + 1][j]);  // 右侧
+            if (j + 1 < len) neighbors.push(matrix[i][j + 1]);  // 下侧
+            return neighbors;
+        }
+
+        for (let i = 0; i < len; i++) {
+            for (let j = 0; j < len; j++) {
+                const neighbors = getNeighbors(i, j);
+                if (neighbors.includes(matrix[i][j])) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    };
 
     addRandomNumToMatrix = () => {
         const emptyCoords = this.getEmptyCoordinates();
@@ -167,6 +193,12 @@ export default class Game {
         
         if (this.isBoardMoved(prevMatrix, this.matrix)) {
             this.addRandomNumToMatrix();
+        }
+
+        if (this.getEmptyCoordinates().length === 0) {
+            if (this.checkGameOver()) {
+                console.log('game over!!!');
+            }
         }
     };
 
