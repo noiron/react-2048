@@ -5,14 +5,16 @@ export const initState = {
         [0, 0, 0, 0],
         [0, 0, 0, 0]
     ],
-    score: 0
+    score: 0,
+    gameOver: false,
 };
 
 export default class Game {
-    constructor({ matrix, score, highScore }) {
+    constructor({ matrix, score, highScore, gameOver }) {
         this.matrix = JSON.parse(JSON.stringify(matrix));
         this.score = score || 0;
         this.highScore = highScore || 0;
+        this.gameOver = gameOver || false;
 
         // 游戏处于空白状态时，随机加入初始数字
         if (JSON.stringify(matrix) === JSON.stringify(initState.matrix)) {
@@ -92,6 +94,9 @@ export default class Game {
         [...Array(2)].forEach(a => {
             this.addRandomNumToMatrix();
         })
+        return {
+            matrix: copyMatrix(this.matrix)
+        }
     }
 
     rotateRight = () => {
@@ -199,12 +204,22 @@ export default class Game {
         if (this.getEmptyCoordinates().length === 0) {
             if (this.checkGameOver()) {
                 console.log('game over!!!');
+                this.gameOver = true;
             }
+        }
+
+        const matrix = copyMatrix(this.matrix);
+        const { score, gameOver } = this;
+
+        return {
+            matrix,
+            score,
+            gameOver
         }
     };
 
     moveUp = () => {
-        this.move(() => {
+        return this.move(() => {
             this.rotateRight();
             this.shiftRight();
             this.combineNumToRight();           
@@ -213,7 +228,7 @@ export default class Game {
     };
 
     moveDown = () => {
-        this.move(() => {
+        return this.move(() => {
             this.rotateLeft();
             this.shiftRight();
             this.combineNumToRight();
@@ -222,14 +237,14 @@ export default class Game {
     };
 
     moveLeft = () => {
-        this.move(() => {
+        return this.move(() => {
             this.shiftLeft();
             this.combineNumToLeft();
         });
     };
 
     moveRight = () => {
-        this.move(() => {
+        return this.move(() => {
             this.shiftRight();
             this.combineNumToRight();
         });
@@ -240,6 +255,14 @@ export default class Game {
         this.matrix = JSON.parse(JSON.stringify(matrix));
         this.score = score;
         this.addInitNums();
-        return this;
+        return {
+            matrix: copyMatrix(this.matrix),
+            score: 0
+        };
     }
+}
+
+
+function copyMatrix(matrix) {
+    return JSON.parse(JSON.stringify(matrix));
 }
