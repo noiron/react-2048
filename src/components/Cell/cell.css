@@ -13,11 +13,13 @@
     font-size: 32px;
     line-height: 90px;
     text-align: center;
+    color: #000;
+    text-shadow: 1px 1px 2px #ddd;
 }
 
 
 /* Colors from http://materialuicolors.co/  Orange */
-.color-2 {
+/* .color-2 {
     background-color: #FFF3E0;
 }
 
@@ -67,4 +69,56 @@
 
 .color-8192 {
     background-color: #FFD180;
+} */
+
+.color-2 {
+    background-color: #A8D8EA;
+}
+
+.color-4 {
+    background-color: #AA96DA;
+}
+
+.color-8 {
+    background-color: #FCBAD3;
+}
+
+.color-16 {
+    background-color: #8BC34A;
+}
+
+.color-32 {
+    background-color: #F38181;
+}
+
+.color-64 {
+    background-color: #FCE38A;
+}
+
+.color-128 {
+    background-color: #9E9E9E;
+}
+
+.color-256 {
+    background-color: #EAFFD0;
+}
+
+.color-512 {
+    background-color: #95E1D3;
+}
+
+.color-1024 {
+    background-color: #03A9F4;
+}
+
+.color-2048 {
+    background-color: #00ADB5;
+}
+
+.color-4096 {
+    background-color: #393E46;
+}
+
+.color-8192 {
+    background-color: #3490DE;
 }
