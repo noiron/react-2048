@@ -259,7 +259,8 @@ export default class Game {
         this.addInitNums();
         return {
             matrix: copyMatrix(this.matrix),
-            score: 0
+            score: 0,
+            gameOver: false,
         };
     }
 }

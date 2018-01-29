@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Board from './components/Board';
 import Speaker from './components/Speaker';
 import Reset from './components/Reset';
+import GameOver from './components/GameOver';
 import MoveAudio from './assets/audio/move.mp3';
 import * as actions from './actions/index';
 
@@ -15,6 +16,7 @@ const mapStateToProps = state => {
         matrix: state.matrix,
         score: state.score,
         highScore: state.highScore,
+        gameOver: state.gameOver,
     }
 }
 
@@ -35,9 +37,9 @@ class App extends Component {
         if (localStorage.getItem('2048_game_state')) {
             const localStorageState = JSON.parse(localStorage.getItem('2048_game_state'));
             if (localStorageState.matrix) {
-                const { matrix, score, highScore } = localStorageState;
+                const { matrix, score, highScore, gameOver } = localStorageState;
 
-                dispatch(actions.init({ matrix, score, highScore }));
+                dispatch(actions.init({ matrix, score, highScore, gameOver }));
                 return;
             }
         } else {
@@ -92,19 +94,22 @@ class App extends Component {
 
     render() {
         const { speakerOn } = this.state;
+        const { matrix, score, highScore, gameOver } = this.props;
 
         return (
             <div className={styles.App}>
                 <section className={styles.scoresRow}>
-                    <div className={styles.score}>Score: {this.props.score}</div>
-                    <div className={styles.score}>HighScore: {this.props.highScore}</div>
+                    <div className={styles.score}>Score: {score}</div>
+                    <div className={styles.score}>Best Score: {highScore}</div>
                 </section>
 
                 <div className={styles.buttonsRow}>
                     <Speaker onClick={this.toggleSpeaker} speakerOn={speakerOn} />
                     <Reset onClick={this.resetGame} />
                 </div>                
-                <Board matrix={this.props.matrix} />
+                <Board matrix={matrix} />
+
+                {gameOver && <GameOver className={styles.gameOver} />}
             </div>
         );
     }
@@ -113,13 +118,9 @@ class App extends Component {
 export default connect(mapStateToProps)(App);
 
 export function setLocalStorageState(game) {
-    const { matrix, score, highScore } = game;
+    const { matrix, score, highScore, gameOver } = game;
 
-    const state = {
-        matrix,
-        score,
-        highScore,
-    };
+    const state = { matrix, score, highScore, gameOver };
     const stateStr = JSON.stringify(state);
     localStorage.setItem('2048_game_state', stateStr);
 }

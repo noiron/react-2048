@@ -7,7 +7,6 @@ import { store } from './store';
 import registerServiceWorker from './registerServiceWorker';
 
 store.subscribe(() => {
-    console.log(store.getState())
     setLocalStorageState(store.getState());
 });
 
