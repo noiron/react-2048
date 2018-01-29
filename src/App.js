@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Board from './components/Board';
-import Game from './game';
 import Speaker from './components/Speaker';
 import Reset from './components/Reset';
 import MoveAudio from './assets/audio/move.mp3';
@@ -10,15 +9,6 @@ import * as actions from './actions/index';
 import styles from './index.css';
 
 const moveAudio = new Audio(MoveAudio);
-
-const game = new Game({
-    matrix: [
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0]
-    ]
-});
 
 const mapStateToProps = state => {
     return {
@@ -39,26 +29,19 @@ class App extends Component {
     }
 
     componentDidMount() {
+        const { dispatch } = this.props;
+
         // 如果 localStorage 中保存有数据，则读取以用于初始化
         if (localStorage.getItem('2048_game_state')) {
             const localStorageState = JSON.parse(localStorage.getItem('2048_game_state'));
             if (localStorageState.matrix) {
                 const { matrix, score, highScore } = localStorageState;
 
-                this.props.dispatch({
-                    type: 'INIT',
-                    payload: {
-                        matrix,
-                        score,
-                        highScore
-                    }
-                })
+                dispatch(actions.init({ matrix, score, highScore }));
                 return;
             }
         } else {
-            this.props.dispatch({
-                type: 'INIT'
-            })
+            dispatch(actions.init());
         }
     }
 
@@ -68,25 +51,21 @@ class App extends Component {
 
         switch (e.key) {
             case 'ArrowLeft':
-                // game.moveLeft();
                 dispatch(actions.moveLeft());
                 this._operationAfterMove(game);
                 break;
 
             case 'ArrowRight':
-                // game.moveRight();
                 dispatch(actions.moveRight());
                 this._operationAfterMove(game);
                 break;
 
             case 'ArrowUp':
-                // game.moveUp();
                 dispatch(actions.moveUp());
                 this._operationAfterMove(game);
                 break;
 
             case 'ArrowDown':
-                // game.moveDown();
                 dispatch(actions.moveDown());
                 this._operationAfterMove(game);
                 break;
@@ -98,10 +77,7 @@ class App extends Component {
 
     _operationAfterMove(game) {
         const { speakerOn } = this.state;
-        // this.setState({ game });
         speakerOn && moveAudio.play();
-        // 每次操作后将数据保存到 localStorage 中去
-        // setLocalStorageState(game);
     }
 
     toggleSpeaker = () => {
@@ -111,18 +87,11 @@ class App extends Component {
     };
 
     resetGame = () => {
-        // this.setState(prevState => ({
-        //     game: prevState.game._reset()
-        // }));
-        this.props.dispatch({
-            type: 'RESET'
-        })
+        this.props.dispatch(actions.reset());
     };
 
     render() {
-        const { game, speakerOn } = this.state;
-
-        console.log(this.props);
+        const { speakerOn } = this.state;
 
         return (
             <div className={styles.App}>

@@ -210,12 +210,13 @@ export default class Game {
         }
 
         const matrix = copyMatrix(this.matrix);
-        const { score, gameOver } = this;
+        const { score, gameOver, highScore } = this;
 
         return {
             matrix,
             score,
-            gameOver
+            gameOver,
+            highScore,
         }
     };
 
