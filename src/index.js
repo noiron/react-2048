@@ -2,13 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux'
 import './index.css';
-import App from './App';
+import App, { setLocalStorageState } from './App';
 import { store } from './store'; 
 import registerServiceWorker from './registerServiceWorker';
 
-store.subscribe(() => 
+store.subscribe(() => {
     console.log(store.getState())
-)
+    setLocalStorageState(store.getState());
+});
 
 ReactDOM.render(
     <Provider store={store}>

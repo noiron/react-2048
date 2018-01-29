@@ -6,6 +6,7 @@ export const initState = {
         [0, 0, 0, 0]
     ],
     score: 0,
+    highScore: 0,
     gameOver: false,
 };
 

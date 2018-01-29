@@ -5,6 +5,8 @@ import Game from './game';
 import Speaker from './components/Speaker';
 import Reset from './components/Reset';
 import MoveAudio from './assets/audio/move.mp3';
+import * as actions from './actions/index';
+
 import styles from './index.css';
 
 const moveAudio = new Audio(MoveAudio);
@@ -30,13 +32,8 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            game,
             speakerOn: true,
         };
-
-        this.props.dispatch({
-            type: 'INIT'
-        })
 
         document.addEventListener('keydown', this.handleKeyDown);
     }
@@ -47,9 +44,21 @@ class App extends Component {
             const localStorageState = JSON.parse(localStorage.getItem('2048_game_state'));
             if (localStorageState.matrix) {
                 const { matrix, score, highScore } = localStorageState;
-                const game = new Game({ matrix, score, highScore });
-                this.setState({ game });
+
+                this.props.dispatch({
+                    type: 'INIT',
+                    payload: {
+                        matrix,
+                        score,
+                        highScore
+                    }
+                })
+                return;
             }
+        } else {
+            this.props.dispatch({
+                type: 'INIT'
+            })
         }
     }
 
@@ -60,34 +69,26 @@ class App extends Component {
         switch (e.key) {
             case 'ArrowLeft':
                 // game.moveLeft();
+                dispatch(actions.moveLeft());
                 this._operationAfterMove(game);
-                dispatch({
-                    type: 'MOVE_LEFT'
-                });
                 break;
 
             case 'ArrowRight':
                 // game.moveRight();
+                dispatch(actions.moveRight());
                 this._operationAfterMove(game);
-                dispatch({
-                    type: 'MOVE_RIGHT'
-                });
                 break;
 
             case 'ArrowUp':
                 // game.moveUp();
+                dispatch(actions.moveUp());
                 this._operationAfterMove(game);
-                dispatch({
-                    type: 'MOVE_UP'
-                });
                 break;
 
             case 'ArrowDown':
                 // game.moveDown();
+                dispatch(actions.moveDown());
                 this._operationAfterMove(game);
-                dispatch({
-                    type: 'MOVE_DOWN'
-                });
                 break;
 
             default:
@@ -142,7 +143,7 @@ class App extends Component {
 
 export default connect(mapStateToProps)(App);
 
-function setLocalStorageState(game) {
+export function setLocalStorageState(game) {
     const { matrix, score, highScore } = game;
 
     const state = {

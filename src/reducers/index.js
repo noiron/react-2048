@@ -6,6 +6,9 @@ export default function board(state = initState, action) {
 
     switch (action.type) {
         case actionTypes.INIT: {
+            if (action.payload) {
+                return { ...state, ...action.payload }
+            }
             const matrix = game.matrix;
             return { ...state, matrix };            
         }
@@ -22,7 +25,6 @@ export default function board(state = initState, action) {
 
         case actionTypes.MOVE_UP: {
             const result = game.moveUp();
-            console.log('move up result, ', result);
             return { ...state, ...result };
         }
 
