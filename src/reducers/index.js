@@ -1,7 +1,7 @@
 import Game, { initState } from '../game';
 import * as actionTypes from '../actions/actionTypes';
 
-export default function board(state = initState, action) {
+export default function gameReducer(state = initState, action) {
     const game = new Game(state);
 
     switch (action.type) {

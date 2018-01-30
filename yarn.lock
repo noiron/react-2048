@@ -5200,6 +5200,10 @@ redux-devtools-extension@^2.13.2:
   version "2.13.2"
   resolved "http://registry.npm.taobao.org/redux-devtools-extension/download/redux-devtools-extension-2.13.2.tgz#e0f9a8e8dfca7c17be92c7124958a3b94eb2911d"
 
+redux-undo@beta:
+  version "1.0.0-beta9-9-7"
+  resolved "http://registry.npm.taobao.org/redux-undo/download/redux-undo-1.0.0-beta9-9-7.tgz#fe3baa1b271423d7ddbbfc3a82c71b029a2db8ba"
+
 redux@^3.7.2:
   version "3.7.2"
   resolved "http://registry.npm.taobao.org/redux/download/redux-3.7.2.tgz#06b73123215901d25d065be342eb026bc1c8537b"
