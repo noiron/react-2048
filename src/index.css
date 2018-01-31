@@ -3,36 +3,3 @@ body {
     padding: 0;
     font-family: sans-serif;
 }
-
-.App {
-    min-width: 400px;
-    padding: 20px 50px;
-}
-
-.scoresRow {
-    width: 420px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.score {
-    text-align: left;
-    margin-top: 50px;
-    font-size: 28px;
-    display: inline-block;
-}
-
-.buttonsRow {
-    padding: 10px 0;
-    text-align: left;
-}
-
-.buttonsRow [class$='-btn'] {
-    display: inline-block;
-    margin-right: 10px;
-    cursor: pointer;
-}
-
-.gameOver {
-    margin-top: 20px;
-}

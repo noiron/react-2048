@@ -8,7 +8,7 @@ import MoveAudio from './assets/audio/move.mp3';
 import * as actions from './actions/index';
 import { ActionCreators as UndoActionCreators } from 'redux-undo';
 
-import styles from './index.css';
+import styles from './App.css';
 
 const moveAudio = new Audio(MoveAudio);
 
@@ -107,8 +107,14 @@ class App extends Component {
         return (
             <div className={styles.App}>
                 <section className={styles.scoresRow}>
-                    <div className={styles.score}>Score: {score}</div>
-                    <div className={styles.score}>Best Score: {highScore}</div>
+                    <div className={styles.score}>
+                        <span className={styles.scoreLabel}>Score</span>
+                        <span className={styles.scoreValue}>{score}</span>
+                    </div>
+                    <div className={styles.score}>
+                        <span className={styles.scoreLabel}>Best</span>
+                        <span className={styles.scoreValue}>{highScore}</span>
+                    </div>
                 </section>
 
                 <div className={styles.buttonsRow}>
