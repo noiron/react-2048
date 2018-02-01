@@ -3,10 +3,13 @@ import { connect } from 'react-redux';
 import Board from './components/Board';
 import Speaker from './components/Speaker';
 import Reset from './components/Reset';
+import Button from './components/Button';
 import GameOver from './components/GameOver';
 import MoveAudio from './assets/audio/move.mp3';
 import * as actions from './actions/index';
 import { ActionCreators as UndoActionCreators } from 'redux-undo';
+
+import UndoSvg from './assets/svg/undo.svg';
 
 import styles from './App.css';
 
@@ -119,13 +122,13 @@ class App extends Component {
 
                 <div className={styles.buttonsRow}>
                     <Speaker onClick={this.toggleSpeaker} speakerOn={speakerOn} />
+                    <Button handleClick={this.undoGame} img={UndoSvg} desc="undo">Undo</Button>
                     <Reset onClick={this.resetGame} />
                 </div>                
                 <Board matrix={matrix} />
 
                 {gameOver && <GameOver className={styles.gameOver} />}
 
-                <button onClick={this.undoGame}>Undo</button>
             </div>
         );
     }
