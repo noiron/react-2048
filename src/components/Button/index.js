@@ -17,3 +17,6 @@ Button.propTypes = {
 }
 
 export default Button;
+
+export { default as Undo } from './Undo';
+export { default as Reset } from './Reset';
