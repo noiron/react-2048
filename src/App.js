@@ -106,6 +106,7 @@ class App extends Component {
 
         return (
             <div className={styles.App}>
+                <h1>2048</h1>
                 <section className={styles.scoresRow}>
                     <div className={styles.score}>
                         <span className={styles.scoreLabel}>Score</span>

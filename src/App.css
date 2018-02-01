@@ -4,15 +4,23 @@
     padding: 20px 50px;
 }
 
+h1 {
+    position: absolute;
+    top: 40px;
+    font-size: 60px;
+    margin-top: 0;
+}
+
 .scoresRow {
     width: 420px;
     display: flex;
     justify-content: flex-end;
+    margin-top: 20px;
 }
 
 .score {
     text-align: left;
-    margin: 50px 20px 0 0;
+    margin: 0 20px 0 0;
     padding: 5px 15px;
     font-size: 24px;
     min-width: 60px;
