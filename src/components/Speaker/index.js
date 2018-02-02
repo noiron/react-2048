@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import SpeakerOn from '../../assets/svg/speaker-on.svg';
 import SpeakerOff from '../../assets/svg/speaker-off.svg';
+import styles from '../Button/button.css';
 
 export default class Speaker extends PureComponent {
     static propTypes = {
@@ -26,7 +27,7 @@ export default class Speaker extends PureComponent {
     render() {
         const { speaker } = this.state;
         return (
-            <div onClick={this.handleClick} className="speaker-btn">
+            <div onClick={this.handleClick} className={styles.button}>
                 <img src={speaker ? SpeakerOn : SpeakerOff} alt="speaker" />
             </div>
         )
