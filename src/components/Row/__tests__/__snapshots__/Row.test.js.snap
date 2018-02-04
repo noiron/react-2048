@@ -1,0 +1,149 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Board /> component render 1`] = `
+<div
+  className={undefined}
+>
+  <div
+    className=" "
+  >
+    <div
+      className={undefined}
+    />
+  </div>
+  <div
+    className=" "
+  >
+    <div
+      className={undefined}
+    />
+  </div>
+  <div
+    className=" "
+  >
+    <div
+      className={undefined}
+    >
+      4
+    </div>
+  </div>
+  <div
+    className=" "
+  >
+    <div
+      className={undefined}
+    >
+      4
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<Board /> component render 2`] = `
+<div
+  className={undefined}
+>
+  <div
+    className=" "
+  >
+    <div
+      className={undefined}
+    />
+  </div>
+  <div
+    className=" "
+  >
+    <div
+      className={undefined}
+    >
+      2
+    </div>
+  </div>
+  <div
+    className=" "
+  >
+    <div
+      className={undefined}
+    />
+  </div>
+  <div
+    className=" "
+  >
+    <div
+      className={undefined}
+    />
+  </div>
+</div>
+`;
+
+exports[`<Board /> component render 3`] = `
+<div
+  className={undefined}
+>
+  <div
+    className=" "
+  >
+    <div
+      className={undefined}
+    >
+      4
+    </div>
+  </div>
+  <div
+    className=" "
+  >
+    <div
+      className={undefined}
+    />
+  </div>
+  <div
+    className=" "
+  >
+    <div
+      className={undefined}
+    />
+  </div>
+  <div
+    className=" "
+  >
+    <div
+      className={undefined}
+    />
+  </div>
+</div>
+`;
+
+exports[`<Board /> component render 4`] = `
+<div
+  className={undefined}
+>
+  <div
+    className=" "
+  >
+    <div
+      className={undefined}
+    />
+  </div>
+  <div
+    className=" "
+  >
+    <div
+      className={undefined}
+    />
+  </div>
+  <div
+    className=" "
+  >
+    <div
+      className={undefined}
+    />
+  </div>
+  <div
+    className=" "
+  >
+    <div
+      className={undefined}
+    />
+  </div>
+</div>
+`;
