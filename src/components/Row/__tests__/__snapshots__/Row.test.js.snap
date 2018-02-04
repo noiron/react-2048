@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Board /> component render 1`] = `
+exports[`<Row /> component render 1`] = `
 <div
   className={undefined}
 >
@@ -39,7 +39,7 @@ exports[`<Board /> component render 1`] = `
 </div>
 `;
 
-exports[`<Board /> component render 2`] = `
+exports[`<Row /> component render 2`] = `
 <div
   className={undefined}
 >
@@ -76,7 +76,7 @@ exports[`<Board /> component render 2`] = `
 </div>
 `;
 
-exports[`<Board /> component render 3`] = `
+exports[`<Row /> component render 3`] = `
 <div
   className={undefined}
 >
@@ -113,7 +113,7 @@ exports[`<Board /> component render 3`] = `
 </div>
 `;
 
-exports[`<Board /> component render 4`] = `
+exports[`<Row /> component render 4`] = `
 <div
   className={undefined}
 >

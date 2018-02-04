@@ -6,7 +6,7 @@ import Row from '..';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-describe('<Board />', () => {
+describe('<Row />', () => {
     it('component render', () => {
         const matrix = [[0, 0, 4, 4], [0, 2, 0, 0], [4, 0, 0, 0], [0, 0, 0, 0]];
         matrix.forEach(r => {

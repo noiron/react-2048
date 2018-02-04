@@ -6,7 +6,7 @@ import Cell from '..';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-describe('<Board />', () => {
+describe('<Cell />', () => {
     it('component render', () => {
         let cell = renderer.create(<Cell value={32} />).toJSON();
         expect(cell).toMatchSnapshot();
