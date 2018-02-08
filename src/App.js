@@ -7,6 +7,7 @@ import GameOver from './components/GameOver';
 import MoveAudio from './assets/audio/move.mp3';
 import * as actions from './actions/index';
 import { ActionCreators as UndoActionCreators } from 'redux-undo';
+import swipeDetect from './utils/swipeDetect';
 
 import styles from './App.css';
 
@@ -41,34 +42,64 @@ class App extends Component {
                 const { matrix, score, highScore, gameOver } = localStorageState.present;
 
                 dispatch(actions.init({ matrix, score, highScore, gameOver }));
-                return;
+
             }
         } else {
             dispatch(actions.init());
         }
+
+        if (this.app) {
+            swipeDetect(this.app, this._handleDirection);
+        }
     }
 
     handleKeyDown = e => {
-        const { game } = this.state;
-        const { dispatch } = this.props;
+        // const { game } = this.state;
+        // const { dispatch } = this.props;
 
         switch (e.key) {
             case 'ArrowLeft':
+                this._handleDirection('left');
+                break;
+
+            case 'ArrowRight':
+                this._handleDirection('right');
+                break;
+
+            case 'ArrowUp':
+                this._handleDirection('up');
+                break;
+
+            case 'ArrowDown':
+                this._handleDirection('down');
+                break;
+
+            default:
+                break;
+        }
+    };
+
+    _handleDirection = (dir) => {
+        const { game } = this.state;
+        const { dispatch } = this.props;
+
+        switch (dir) {
+            case 'left':
                 dispatch(actions.moveLeft());
                 this._operationAfterMove(game);
                 break;
 
-            case 'ArrowRight':
+            case 'right':
                 dispatch(actions.moveRight());
                 this._operationAfterMove(game);
                 break;
 
-            case 'ArrowUp':
+            case 'up':
                 dispatch(actions.moveUp());
                 this._operationAfterMove(game);
                 break;
 
-            case 'ArrowDown':
+            case 'down':
                 dispatch(actions.moveDown());
                 this._operationAfterMove(game);
                 break;
@@ -76,7 +107,7 @@ class App extends Component {
             default:
                 break;
         }
-    };
+    }
 
     _operationAfterMove(game) {
         const { speakerOn } = this.state;
@@ -105,7 +136,7 @@ class App extends Component {
         const { matrix, score, highScore, gameOver } = this.props;
 
         return (
-            <div className={styles.App}>
+            <div className={styles.App} ref={app => { this.app = app }} >
                 <h1>2048</h1>
                 <section className={styles.scoresRow}>
                     <div className={styles.score}>
