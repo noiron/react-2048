@@ -6,11 +6,15 @@ body {
 
 
 html {
-    font-size: 1vw;
+    font-size: 100px;
 }
 
+/* 
+ * 组件中利用rem来设置宽高，以达到响应式效果
+ * 移动端和桌面端给html设置不同的 font-size
+*/
 @media (max-width: 768px) {
     html {
-        font-size: 4vw;
+        font-size: 22vw;
     }
 } 

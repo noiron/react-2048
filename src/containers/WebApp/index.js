@@ -9,7 +9,7 @@ import * as actions from './../../actions/index';
 import { ActionCreators as UndoActionCreators } from 'redux-undo';
 import swipeDetect from './../../utils/swipeDetect';
 
-import styles from './App.css';
+import styles from './webApp.css';
 
 const moveAudio = new Audio(MoveAudio);
 

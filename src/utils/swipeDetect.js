@@ -6,8 +6,8 @@ function swipeDetect(el, callback) {
     const touchSurface = el;
 
     const allowedTime = 500;
-    const restraint = 120;
-    const threshold = 200;
+    const restraint = 60;
+    const threshold = 100;
 
     let swipeDir;
     // let dist;

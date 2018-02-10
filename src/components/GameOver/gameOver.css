@@ -1,5 +1,5 @@
 .gameOver {
-    font-size: 32px;
-    width: 400px;
+    font-size: .32rem;
+    width: 100%;
     text-align: center;
 }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import WebApp from './containers/WebApp';
 
 
@@ -18,6 +18,8 @@ export default class App extends Component {
     }
 
     render() {
+        // const { isMobile } = this.state;
+
         return (
             <WebApp />
         )

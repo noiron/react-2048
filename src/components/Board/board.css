@@ -1,9 +1,10 @@
 .boardTable {
-    margin: 10px 0;
+    margin: .1rem 0;
+    width: 100%;
 }
 
 .boardRow {
-    height: 100px;
+    height: 1rem;
     display: flex;
-    margin-bottom: 6px;
+    margin-bottom: .06rem;
 }
