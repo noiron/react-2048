@@ -1,5 +1,5 @@
 .App {
-    width: 4rem;
+    width: 4.2rem;
     padding: .2rem .2rem .1rem;
     margin: 0 auto;
 }
@@ -20,10 +20,10 @@ h1 {
 
 .score {
     text-align: left;
-    margin: 0 20px 0 0;
-    padding: 5px 15px;
-    font-size: 24px;
-    min-width: 60px;
+    margin: 0 .1rem 0 0;
+    padding: .05rem .15rem;
+    font-size: .24rem;
+    min-width: .6rem;
     display: flex;
     flex-direction: column;
     transform: skew(10deg);

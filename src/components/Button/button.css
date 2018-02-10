@@ -2,15 +2,15 @@
     width: .4rem;
     height: .4rem;
     margin-right: .1rem;
-    display: inline-block;
     cursor: pointer;
-    text-align: center;
     box-shadow: 1px 1px 5px #888888;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .button img {
-    position: absolute;
-    top: 20%;
-    right: 15%;
+    position: relative;
+    left: 5%;
 }

@@ -10,11 +10,14 @@
 .inner {
     width: 90%;
     height: 90%;
+    padding-left: 5%;
+    padding-top: 2%;
     font-size: .32rem;
-    line-height: 3;
+    line-height: 2.8;
     text-align: center;
-    color: #000;
-    text-shadow: 1px 1px 2px #ddd;
+    color: #333;
+    font-weight: 500;
+    /* text-shadow: 1px 1px 2px #ddd; */
 }
 
 
