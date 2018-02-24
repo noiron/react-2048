@@ -48,8 +48,8 @@ class App extends Component {
             dispatch(actions.init());
         }
 
-        if (this.app) {
-            swipeDetect(this.app, this._handleDirection);
+        if (this.board) {
+            swipeDetect(this.board, this._handleDirection);
         }
     }
 
@@ -153,8 +153,11 @@ class App extends Component {
                     <Speaker onClick={this.toggleSpeaker} speakerOn={speakerOn} />
                     <Undo handleClick={this.undoGame} />
                     <Reset handleClick={this.resetGame} />
-                </div>                
-                <Board matrix={matrix} />
+                </div>      
+          
+                <div id="game-board"  ref={board => { this.board = board; }}>
+                    <Board matrix={matrix} />
+                </div>
 
                 {gameOver && <GameOver className={styles.gameOver} />}
 
