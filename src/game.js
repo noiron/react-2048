@@ -252,6 +252,26 @@ export default class Game {
         });
     };
 
+    // 根据给定的方向参数，执行相应的移动操作
+    moveDirection = (dir) => {
+        switch(dir) {
+            case 'left':
+                this.moveLeft();
+                break;
+            case 'right':
+                this.moveRight();
+                break;
+            case 'up':
+                this.moveUp();
+                break;
+            case 'down':
+                this.moveDown();
+                break;
+            default:
+                return;
+        }
+    };
+
     _reset = () => {
         const { matrix, score } = initState;
         this.matrix = JSON.parse(JSON.stringify(matrix));
