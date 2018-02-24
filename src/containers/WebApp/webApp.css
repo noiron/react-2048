@@ -54,6 +54,18 @@ h1 {
     justify-content: flex-end;
 }
 
+.autoButton {
+    min-width: .4rem;
+    height: .4rem;
+    margin-right: .1rem;
+    cursor: pointer;
+    box-shadow: 1px 1px 5px #888888;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .gameOver {
     margin-top: .2rem;
 }
