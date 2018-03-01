@@ -134,6 +134,7 @@ class App extends Component {
 
     // 利用 AI 自动运行
     autoRun = () => {
+        console.log('Auto running ...');
         const interval = setInterval(() => {
             const { matrix, gameOver } = this.props;
 

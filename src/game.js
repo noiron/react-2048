@@ -32,7 +32,7 @@ export default class Game {
 
         matrix.forEach((row, i) => {
             row.forEach((value, j) => {
-                if (value === 0) {
+                if (!value) {
                     coordinates.push([i, j]);
                 }
             });
@@ -204,7 +204,7 @@ export default class Game {
 
         if (this.getEmptyCoordinates().length === 0) {
             if (this.checkGameOver()) {
-                console.log('game over!!!');
+                // console.log('game over!!!');
                 this.gameOver = true;
             }
         }
@@ -271,6 +271,10 @@ export default class Game {
                 return;
         }
     };
+
+    addNumToPos(x, y, value) {
+        this.matrix[x][y] = value;
+    }
 
     _reset = () => {
         const { matrix, score } = initState;
