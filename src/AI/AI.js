@@ -33,15 +33,13 @@ class AI {
             }
         }
 
-        if (this.game.gameOver) {
-            return {
-                score: 0
-            }
+        if (this.game.checkGameOver()) {
+            return { score: 0 }
         }
 
         // type = 'PLAYER', max 节点
         if (this.type === 'PLAYER') {
-            let maxScore = 0;
+            let maxScore = -1;
             let currentDirection = null;
 
             for (let i = 0; i < possibleMoves.length; i++) {

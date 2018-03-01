@@ -139,7 +139,8 @@ class App extends Component {
             const { matrix, gameOver } = this.props;
 
             const ai = new AI(matrix);
-            const direction = ai.search().move;
+            const searchResult = ai.search();
+            const direction = searchResult.move;
             this._handleDirection(direction);
 
             if (gameOver) {

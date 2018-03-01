@@ -68,6 +68,15 @@ export default class Game {
 
         for (let i = 0; i < len; i++) {
             for (let j = 0; j < len; j++) {
+                if (!matrix[i][j]) {
+                    // 存在空格则游戏尚未结束
+                    return false;
+                }
+            }
+        }
+
+        for (let i = 0; i < len; i++) {
+            for (let j = 0; j < len; j++) {
                 const neighbors = getNeighbors(i, j);
                 if (neighbors.includes(matrix[i][j])) {
                     return false;
