@@ -12,8 +12,16 @@ const undoBoardReducer = undoable(game, {
     filter: excludeAction('INIT'),
 });
 
+const middlewares = [];
+
+if (process.env.NODE_ENV === 'development') {
+    middlewares.push(devToolsEnhancer())
+}
+
+console.log(process.env.NODE_ENV)
+
 export const store = createStore(
     undoBoardReducer,
     // initialHistory,
-    devToolsEnhancer()
+    ...middlewares
 );
