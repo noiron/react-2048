@@ -8,6 +8,7 @@ import MoveAudio from './../../assets/audio/move.mp3';
 import * as actions from './../../actions/index';
 import { ActionCreators as UndoActionCreators } from 'redux-undo';
 import swipeDetect from './../../utils/swipeDetect';
+import AI from '../../AI/AI';
 
 import styles from './webApp.css';
 
@@ -131,6 +132,23 @@ class App extends Component {
         this.props.dispatch(UndoActionCreators.undo());
     }
 
+    // 利用 AI 自动运行
+    autoRun = () => {
+        console.log('Auto running ...');
+        const interval = setInterval(() => {
+            const { matrix, gameOver } = this.props;
+1
+            const ai = new AI(matrix);
+            const searchResult = ai.search();
+            const direction = searchResult.move;
+            this._handleDirection(direction);
+
+            if (gameOver) {
+                clearInterval(interval);
+            }
+        }, 100);
+    }
+
     render() {
         const { speakerOn } = this.state;
         const { matrix, score, highScore, gameOver } = this.props;
@@ -153,6 +171,7 @@ class App extends Component {
                     <Speaker onClick={this.toggleSpeaker} speakerOn={speakerOn} />
                     <Undo handleClick={this.undoGame} />
                     <Reset handleClick={this.resetGame} />
+                    <button onClick={this.autoRun} className={styles.autoButton}>Auto</button>
                 </div>      
           
                 <div id="game-board"  ref={board => { this.board = board; }}>

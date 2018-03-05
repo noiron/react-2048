@@ -32,7 +32,7 @@ export default class Game {
 
         matrix.forEach((row, i) => {
             row.forEach((value, j) => {
-                if (value === 0) {
+                if (!value) {
                     coordinates.push([i, j]);
                 }
             });
@@ -68,6 +68,15 @@ export default class Game {
 
         for (let i = 0; i < len; i++) {
             for (let j = 0; j < len; j++) {
+                if (!matrix[i][j]) {
+                    // 存在空格则游戏尚未结束
+                    return false;
+                }
+            }
+        }
+
+        for (let i = 0; i < len; i++) {
+            for (let j = 0; j < len; j++) {
                 const neighbors = getNeighbors(i, j);
                 if (neighbors.includes(matrix[i][j])) {
                     return false;
@@ -85,7 +94,8 @@ export default class Game {
 
         const [row, col] = this.getRandom(emptyCoords);
         const newMatrix = copyMatrix(this.matrix);
-        newMatrix[row][col] = this.getRandom([2, 4]);
+        // newMatrix[row][col] = this.getRandom([2, 4]);
+        newMatrix[row][col] = 2;
 
         this.matrix = newMatrix;
         return newMatrix;
@@ -204,7 +214,7 @@ export default class Game {
 
         if (this.getEmptyCoordinates().length === 0) {
             if (this.checkGameOver()) {
-                console.log('game over!!!');
+                // console.log('game over!!!');
                 this.gameOver = true;
             }
         }
@@ -252,6 +262,30 @@ export default class Game {
         });
     };
 
+    // 根据给定的方向参数，执行相应的移动操作
+    moveDirection = (dir) => {
+        switch(dir) {
+            case 'left':
+                this.moveLeft();
+                break;
+            case 'right':
+                this.moveRight();
+                break;
+            case 'up':
+                this.moveUp();
+                break;
+            case 'down':
+                this.moveDown();
+                break;
+            default:
+                return;
+        }
+    };
+
+    addNumToPos(x, y, value) {
+        this.matrix[x][y] = value;
+    }
+
     _reset = () => {
         const { matrix, score } = initState;
         this.matrix = JSON.parse(JSON.stringify(matrix));
@@ -262,6 +296,22 @@ export default class Game {
             score: 0,
             gameOver: false,
         };
+    }
+
+    getMaxValue = () => {
+        let maxValue = 0;
+        for (let i = 0; i < 4; i++) {
+            for (let j = 0; j < 4; j++) {
+                if (this.matrix[i][j] && this.matrix[i][j] > maxValue) {
+                    maxValue = this.matrix[i][j];
+                }
+            }
+        }
+        if (maxValue > 0) {
+            return Math.log(maxValue) / Math.log(2);
+        } else {
+            return 0;
+        }
     }
 }
 
