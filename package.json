@@ -43,6 +43,7 @@
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
     "redux-undo": "beta",
+    "redux-devtools-extension": "^2.13.2",
     "style-loader": "0.19.0",
     "sw-precache-webpack-plugin": "0.11.4",
     "url-loader": "0.6.2",
@@ -101,7 +102,6 @@
   "devDependencies": {
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
-    "react-test-renderer": "^16.2.0",
-    "redux-devtools-extension": "^2.13.2"
+    "react-test-renderer": "^16.2.0"
   }
 }
