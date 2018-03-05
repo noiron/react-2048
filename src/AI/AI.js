@@ -1,5 +1,6 @@
 import Game from '../game';
 import * as _ from 'lodash';
+import { log2 } from './eval';
 
 const allMoves = ['left', 'right', 'up', 'down'];
 
@@ -16,8 +17,13 @@ class AI {
 
     // 对当前局面的一个打分
     eval = () => {
-        // TODO: 先直接用空格的数量来评分
-        return this.game.getEmptyCoordinates().length;
+        const emptyValue = this.game.getEmptyCoordinates().length;
+
+        const max = this.game.getMaxValue();
+
+        const mono = myMono(this.game.matrix);
+
+        return mono * 1.1 + emptyValue * 1;
     }
 
     search() {
@@ -27,19 +33,26 @@ class AI {
         // const move = possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
 
         // 到达给定的深度，直接使用 eval() 函数进行打分
-        if (this.depth >= 5) {
+        if (this.depth >= 3) {
             return {
                 score: this.eval()
             }
         }
 
         if (this.game.checkGameOver()) {
-            return { score: 0 }
+            // console.log('over');
+
+            if (this.type === 'PLAYER') {
+                return { score: -100000 };
+            } else {
+                return { score: 100000 };
+            }
+
         }
 
         // type = 'PLAYER', max 节点
         if (this.type === 'PLAYER') {
-            let maxScore = -1;
+            let maxScore = -100000;
             let currentDirection = null;
 
             for (let i = 0; i < possibleMoves.length; i++) {
@@ -68,8 +81,7 @@ class AI {
         
         // type === 'COMPUTER', min 节点
         else if (this.type === 'COMPUTER') {
-            let minScore = 1000;
-            let currentPos = null;
+            let minScore = 100000;
 
             const possiblePositions = this.game.getEmptyCoordinates();
 
@@ -89,11 +101,10 @@ class AI {
 
                     if (childScore < minScore) {
                         minScore = childScore;
-                        currentPos = pos;
                     }
                 }
             } else {
-                minScore = 0;
+                minScore = -10000;
             }
 
             return {
@@ -123,11 +134,47 @@ class AI {
 
 export default AI;
 
-// /** 
-//  * 用两个不同的状态表示当前由谁进行操作
-//  * 'MOVE' 表示由 ai 模拟的移动操作
-//  * 'ADD' 表示向棋盘上添加数字的操作
-// */
-// function changeTurn(player) {
-//     return player === 'MOVE' ? 'ADD' : 'MOVE';
-// }
+function myMono(matrix) {
+    let result = 0;
+
+    // 统计每一行
+    for (let i = 0; i < 4; i++) {
+        let counter = 0;
+        let sorted = _.sortBy(matrix[i]);
+
+        if (i % 2 === 0) {
+            sorted = sorted.reverse();
+        }
+
+
+        for (let j = 0; j < 4; j++) {
+            // 比较原数组和排序后数组的顺序不同个数
+            if (sorted[j] !== matrix[i][j]) {
+                counter += log2(Math.max(matrix[i][j], sorted[j])) * 1.2;
+            }
+        }
+
+        result += counter;
+    }
+
+    // 统计每一列
+    for (let j = 0; j < 4; j++) {
+        let counter = 0;
+        const original = [];
+        
+        for (let i = 0; i < 4; i++) {
+            original.push(matrix[i][j]);
+        }
+
+        const sorted = _.sortBy(original).reverse();
+        for (let i = 0; i < 4; i++) {
+            if (sorted[i] !== original[i]) {
+                counter += log2(Math.max(original[i], sorted[i])) * 1;
+            }
+        }
+
+        result += counter;
+    }
+
+    return -result;
+} 

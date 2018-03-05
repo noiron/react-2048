@@ -137,7 +137,7 @@ class App extends Component {
         console.log('Auto running ...');
         const interval = setInterval(() => {
             const { matrix, gameOver } = this.props;
-
+1
             const ai = new AI(matrix);
             const searchResult = ai.search();
             const direction = searchResult.move;
@@ -146,7 +146,7 @@ class App extends Component {
             if (gameOver) {
                 clearInterval(interval);
             }
-        }, 500);
+        }, 100);
     }
 
     render() {

@@ -94,7 +94,8 @@ export default class Game {
 
         const [row, col] = this.getRandom(emptyCoords);
         const newMatrix = copyMatrix(this.matrix);
-        newMatrix[row][col] = this.getRandom([2, 4]);
+        // newMatrix[row][col] = this.getRandom([2, 4]);
+        newMatrix[row][col] = 2;
 
         this.matrix = newMatrix;
         return newMatrix;
@@ -295,6 +296,22 @@ export default class Game {
             score: 0,
             gameOver: false,
         };
+    }
+
+    getMaxValue = () => {
+        let maxValue = 0;
+        for (let i = 0; i < 4; i++) {
+            for (let j = 0; j < 4; j++) {
+                if (this.matrix[i][j] && this.matrix[i][j] > maxValue) {
+                    maxValue = this.matrix[i][j];
+                }
+            }
+        }
+        if (maxValue > 0) {
+            return Math.log(maxValue) / Math.log(2);
+        } else {
+            return 0;
+        }
     }
 }
 
